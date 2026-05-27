@@ -23,14 +23,16 @@ export default function Card() {
 
     return (
         <>
-            <input
-                type="text"
-                placeholder="Pesquise um pokemon..."
-                id="pokemon"
-                value={pokemon}
-                onChange={handleInputChange}
-            />
-            <button onClick={buscarPokemon}>Buscar</button>
+            <div className="procura">
+                <input
+                    type="text"
+                    placeholder="Pesquise um pokemon..."
+                    id="pokemon"
+                    value={pokemon}
+                    onChange={handleInputChange}
+                />
+                <button onClick={buscarPokemon}>Buscar</button>
+            </div>
 
             {data && (
                 <div className="card">

@@ -43,6 +43,12 @@ input {
     border: 3px solid #0f172a;
     border-radius: 5px;
 }
+.procura{
+    margin-top: 20px;
+}
 .caracteristicas{
     list-style: decimal-leading-zero;
+}
+#main-title{
+    margin-top: 20px;
 }
