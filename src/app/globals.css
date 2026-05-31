@@ -12,6 +12,7 @@ body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 .card {
+    position: relative;
     background-color: #f8fafc;
     margin-top: 50px;
     margin-bottom: 50px;
@@ -19,6 +20,21 @@ body {
     width: 350px;
     border: 6px solid #0f172a;
     border-radius: 10px;
+}
+.pokemon-id {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    opacity: 0.6;
+    z-index: 1;
+}
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 h1 {
     color: #ffcb05;
@@ -34,7 +50,7 @@ button:hover {
     transform: scale(1.1);
     box-shadow: 0 0 10px black;
 }
-button:active{
+button:active {
     transform: scale(0.9);
     box-shadow: none;
 }
@@ -44,21 +60,69 @@ input {
     border: 3px solid #0f172a;
     border-radius: 5px;
 }
-.procura{
+
+.procura {
     margin-top: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
 }
-.caracteristicas{
-    list-style: decimal-leading-zero;
+.caracteristicas {
 }
-#main-title{
+#main-title {
     margin-top: 20px;
 }
-.pesquisa-btn{
+.pesquisa-btn {
     border-radius: 100%;
     width: 35px;
     height: 35px;
+}
+.loading-busc {
+    padding: 10px;
+    font-size: 16px;
+    opacity: 0.7;
+}
+.bg-search {
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+.erro {
+    background-color: black;
+    color: red;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px black;
+}
+.erro-container {
+    max-width: 70%;
+    margin-top: 30px;
+}
+.autocomplete {
+    margin-top: 50px;
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 200px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.item {
+    display: block;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.item:hover {
+    background: #f2f2f2;
 }
