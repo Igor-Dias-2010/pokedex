@@ -9,8 +9,9 @@ type ProcurarProps = {
 
 export default function Procurar({ setData, setLoading }: ProcurarProps) {
     const [pokemon, setPokemon] = useState("");
-    const [erro, setErro] = useState("");
+    const [todosPokemons, setTodosPokemons] = useState<string[]>([]);
     const [sugestoes, setSugestoes] = useState<string[]>([]);
+    const [erro, setErro] = useState("");
 
     function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.key === "Enter") {
@@ -25,7 +26,7 @@ export default function Procurar({ setData, setLoading }: ProcurarProps) {
             );
             const data = await res.json();
 
-            setSugestoes(data.results.map((p: any) => p.name));
+            setTodosPokemons(data.results.map((p: any) => p.name));
         }
         loadPokemons();
     }, []);
@@ -57,39 +58,44 @@ export default function Procurar({ setData, setLoading }: ProcurarProps) {
     return (
         <div className="main">
             <div className="procura">
-                <input
-                    type="search"
-                    placeholder="Pesquise um pokemon..."
-                    id="pokemon"
-                    value={pokemon}
-                    onChange={(e) => {
-                        const value = e.target.value;
-                        setPokemon(value);
+                <div className="input-container">
+                    <input
+                        type="search"
+                        placeholder="Pesquise um pokemon..."
+                        id="pokemon"
+                        value={pokemon}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            setPokemon(value);
 
-                        if (!value) {
-                            setSugestoes([]);
-                            return;
-                        }
-                        const filtrados = sugestoes.filter((p) =>
-                            p.toLowerCase().includes(value.toLowerCase()),
-                        );
-                        setSugestoes(filtrados.slice(0, 5));
-                    }}
-                    onKeyDown={handleKeyDown}
-                />
-                {pokemon && sugestoes.length > 0 && (
-                    <div className="autocomplete">
-                        {sugestoes.map((name) => (
-                            <div
-                                key={name}
-                                onClick={() => buscarPokemon(name)}
-                                className="item"
-                            >
-                                {name}
+                            if (!value) {
+                                setSugestoes([]);
+                                return;
+                            }
+                            const filtrados = todosPokemons.filter((p) =>
+                                p.toLowerCase().includes(value.toLowerCase()),
+                            );
+                            setSugestoes(filtrados);
+                        }}
+                        onKeyDown={handleKeyDown}
+                    />
+                    {pokemon && sugestoes.length > 0 && (
+                        <div className="autocomplete">
+                            <div className="autocomplete-scroll">
+                                {sugestoes.map((name) => (
+                                    <div
+                                        key={name}
+                                        onClick={() => buscarPokemon(name)}
+                                        className="item"
+                                    >
+                                        {name}
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
-                )}
+                        </div>
+                    )}
+                </div>
+
                 <button
                     onClick={() => buscarPokemon(pokemon)}
                     className="pesquisa-btn"
@@ -97,9 +103,11 @@ export default function Procurar({ setData, setLoading }: ProcurarProps) {
                     <Search size={20} />
                 </button>
             </div>
-            <div className="erro-container">
-                <h1 className="erro">{erro}</h1>
-            </div>
+            {erro && (
+                <div className="erro-container">
+                    <h1 className="erro">{erro}</h1>
+                </div>
+            )}
         </div>
     );
 }

@@ -16,7 +16,7 @@ body {
     background-color: #f8fafc;
     margin-top: 50px;
     margin-bottom: 50px;
-    height: 600px;
+    height: 650px;
     width: 350px;
     border: 6px solid #0f172a;
     border-radius: 10px;
@@ -67,8 +67,7 @@ input {
     align-items: center;
     justify-content: center;
     gap: 10px;
-}
-.caracteristicas {
+    position: relative;
 }
 #main-title {
     margin-top: 20px;
@@ -78,7 +77,7 @@ input {
     width: 35px;
     height: 35px;
 }
-.loading-busc {
+.loading-busca {
     padding: 10px;
     font-size: 16px;
     opacity: 0.7;
@@ -106,17 +105,24 @@ input {
     margin-top: 30px;
 }
 .autocomplete {
-    margin-top: 50px;
+    top: 100%;
+    left: 0;
     position: absolute;
     background: white;
     border: 1px solid #ddd;
     border-radius: 10px;
-    width: 200px;
-    max-height: 200px;
+    width: 100%;
     overflow-y: auto;
+    overflow: hidden;
     z-index: 10;
 }
-
+.autocomplete-scroll {
+    max-height: 400px;
+    overflow-y: auto;
+}
+.input-container {
+    position: relative;
+}
 .item {
     display: block;
     padding: 8px;
