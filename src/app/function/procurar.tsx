@@ -12,10 +12,26 @@ export default function Procurar({ setData, setLoading }: ProcurarProps) {
     const [todosPokemons, setTodosPokemons] = useState<string[]>([]);
     const [sugestoes, setSugestoes] = useState<string[]>([]);
     const [erro, setErro] = useState("");
+    const [indiceSelecionado, setIndiceSelecionado] = useState(-1);
 
     function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.key === "Enter") {
-            buscarPokemon(pokemon);
+            if (indiceSelecionado >= 0){
+                buscarPokemon(sugestoes[indiceSelecionado]);
+            } else {
+                buscarPokemon(pokemon)
+            }
+        }
+        if (e.key === "ArrowDown") {
+            if (indiceSelecionado < sugestoes.length - 1) {
+                setIndiceSelecionado(indiceSelecionado + 1);
+            }
+        }
+
+        if (e.key === "ArrowUp") {
+            if (indiceSelecionado > 0) {
+                setIndiceSelecionado(indiceSelecionado - 1);
+            }
         }
     }
 
@@ -55,6 +71,7 @@ export default function Procurar({ setData, setLoading }: ProcurarProps) {
             setLoading(false);
         }
     }
+
     return (
         <div className="main">
             <div className="procura">
@@ -67,6 +84,7 @@ export default function Procurar({ setData, setLoading }: ProcurarProps) {
                         onChange={(e) => {
                             const value = e.target.value;
                             setPokemon(value);
+                            setIndiceSelecionado(-1);
 
                             if (!value) {
                                 setSugestoes([]);
@@ -82,11 +100,11 @@ export default function Procurar({ setData, setLoading }: ProcurarProps) {
                     {pokemon && sugestoes.length > 0 && (
                         <div className="autocomplete">
                             <div className="autocomplete-scroll">
-                                {sugestoes.map((name) => (
+                                {sugestoes.map((name, index) => (
                                     <div
                                         key={name}
                                         onClick={() => buscarPokemon(name)}
-                                        className="item"
+                                        className={index === indiceSelecionado ? "item selecionado" : "item"}
                                     >
                                         {name}
                                     </div>
