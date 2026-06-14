@@ -56,10 +56,12 @@ button:active {
     box-shadow: none;
 }
 input {
-    padding: 3px;
-    padding-left: 5px;
+    padding: 5px;
+    padding-left: 10px;
     border: 3px solid #0f172a;
     border-radius: 5px;
+    font-family: monospace;
+    font-size: 15px;
 }
 
 .procura {
@@ -81,7 +83,6 @@ input {
 .loading-busca {
     padding: 10px;
     font-size: 16px;
-    opacity: 0.7;
 }
 .bg-search {
     animation: spin 1s linear infinite;
@@ -116,6 +117,7 @@ input {
     overflow-y: auto;
     overflow: hidden;
     z-index: 10;
+    margin-top: 5px;
 }
 .autocomplete-scroll {
     max-height: 400px;
@@ -137,4 +139,10 @@ input {
     background-color: #3b4cca;
     color: white;
     transition: 0.2s;
+}
+.aviso-de-quantidade{
+    background-color: white;
+    padding: 5px;
+    border: 3px solid white;
+    border-radius: 10px;
 }

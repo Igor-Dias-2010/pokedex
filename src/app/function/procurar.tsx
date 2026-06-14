@@ -14,6 +14,7 @@ export default function Procurar({ setData, setLoading }: ProcurarProps) {
     const [erro, setErro] = useState("");
     const [indiceSelecionado, setIndiceSelecionado] = useState(-1);
     const itemSelecionadoRef = useRef<HTMLDivElement | null>(null);
+    const [quantidadeResultados, setQuantidadeResultados] = useState(0);
 
     function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.key === "Enter") {
@@ -91,6 +92,15 @@ export default function Procurar({ setData, setLoading }: ProcurarProps) {
     });
     return (
         <div className="main">
+            {pokemon && (
+                <div className="aviso-de-quantidade">
+                    <p>
+                        {quantidadeResultados}{" "}
+                        {quantidadeResultados === 1 ? "pokémon" : "pokémons"}{" "}
+                        encontrados.
+                    </p>
+                </div>
+            )}
             <div className="procura">
                 <div className="input-container">
                     <input
@@ -105,11 +115,13 @@ export default function Procurar({ setData, setLoading }: ProcurarProps) {
 
                             if (!value) {
                                 setSugestoes([]);
+                                setQuantidadeResultados(0);
                                 return;
                             }
                             const filtrados = todosPokemons.filter((p) =>
                                 p.toLowerCase().includes(value.toLowerCase()),
                             );
+                            setQuantidadeResultados(filtrados.length);
                             setSugestoes(filtrados);
                         }}
                         onKeyDown={handleKeyDown}
