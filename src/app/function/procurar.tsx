@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Search } from "lucide-react";
 
 type ProcurarProps = {
@@ -13,13 +13,14 @@ export default function Procurar({ setData, setLoading }: ProcurarProps) {
     const [sugestoes, setSugestoes] = useState<string[]>([]);
     const [erro, setErro] = useState("");
     const [indiceSelecionado, setIndiceSelecionado] = useState(-1);
+    const itemSelecionadoRef = useRef<HTMLDivElement | null>(null);
 
     function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.key === "Enter") {
-            if (indiceSelecionado >= 0){
+            if (indiceSelecionado >= 0) {
                 buscarPokemon(sugestoes[indiceSelecionado]);
             } else {
-                buscarPokemon(pokemon)
+                buscarPokemon(pokemon);
             }
         }
         if (e.key === "ArrowDown") {
@@ -46,6 +47,13 @@ export default function Procurar({ setData, setLoading }: ProcurarProps) {
         }
         loadPokemons();
     }, []);
+
+    useEffect(() => {
+        itemSelecionadoRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+        });
+    }, [indiceSelecionado]);
 
     async function buscarPokemon(name: string) {
         setErro("");
@@ -103,8 +111,17 @@ export default function Procurar({ setData, setLoading }: ProcurarProps) {
                                 {sugestoes.map((name, index) => (
                                     <div
                                         key={name}
+                                        ref={
+                                            index === indiceSelecionado
+                                                ? itemSelecionadoRef
+                                                : null
+                                        }
                                         onClick={() => buscarPokemon(name)}
-                                        className={index === indiceSelecionado ? "item selecionado" : "item"}
+                                        className={
+                                            index === indiceSelecionado
+                                                ? "item selecionado"
+                                                : "item"
+                                        }
                                     >
                                         {name}
                                     </div>
