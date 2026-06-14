@@ -96,8 +96,7 @@ export default function Procurar({ setData, setLoading }: ProcurarProps) {
                 <div className="aviso-de-quantidade">
                     <p>
                         {quantidadeResultados}{" "}
-                        {quantidadeResultados === 1 ? "pokémon" : "pokémons"}{" "}
-                        encontrados.
+                        {quantidadeResultados === 1 ? "pokémon encontrado." : "pokémons encontrados."}
                     </p>
                 </div>
             )}
