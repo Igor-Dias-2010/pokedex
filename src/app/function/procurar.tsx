@@ -17,6 +17,7 @@ export default function Procurar({ setData, setLoading }: ProcurarProps) {
 
     function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.key === "Enter") {
+            e.preventDefault();
             if (indiceSelecionado >= 0) {
                 buscarPokemon(sugestoes[indiceSelecionado]);
             } else {
@@ -24,12 +25,14 @@ export default function Procurar({ setData, setLoading }: ProcurarProps) {
             }
         }
         if (e.key === "ArrowDown") {
+            e.preventDefault();
             if (indiceSelecionado < sugestoes.length - 1) {
                 setIndiceSelecionado(indiceSelecionado + 1);
             }
         }
 
         if (e.key === "ArrowUp") {
+            e.preventDefault();
             if (indiceSelecionado > 0) {
                 setIndiceSelecionado(indiceSelecionado - 1);
             }
@@ -56,6 +59,10 @@ export default function Procurar({ setData, setLoading }: ProcurarProps) {
     }, [indiceSelecionado]);
 
     async function buscarPokemon(name: string) {
+        setPokemon("");
+        setSugestoes([]);
+        setIndiceSelecionado(-1);
+
         setErro("");
         setLoading(true);
         setData(null);
@@ -72,14 +79,16 @@ export default function Procurar({ setData, setLoading }: ProcurarProps) {
             }
             const result = await response.json();
             setData(result);
-            setPokemon("");
         } catch {
             setErro("Erro na busca");
         } finally {
             setLoading(false);
         }
     }
-
+    console.log({
+        pokemon,
+        sugestoes: sugestoes.length,
+    });
     return (
         <div className="main">
             <div className="procura">
